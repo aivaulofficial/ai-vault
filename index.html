@@ -25,11 +25,33 @@ main{padding-bottom:56px}.section-head{display:flex;align-items:end;justify-cont
 </head>
 <body>
   <style>
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  order: 0;
+}
+
 #video-studio {
-  order: -999;
-  margin-top: 10px;
+  order: 1;
+  margin-top: 10px !important;
+}
+
+.hero {
+  order: 2;
+}
+
+main {
+  order: 3;
+}
+
+footer {
+  order: 4;
 }
   </style>
+  
 <header><div class="wrap nav"><a class="brand" href="#" aria-label="AI Vault home"><span class="brand-mark">✦</span><span>AI <span>VAULT</span></span></a><span class="nav-pill">✦ Your AI toolkit</span></div></header>
 <section class="hero wrap">
   <div class="eyebrow"><span class="spark">✦</span> YOUR AI TOOL DISCOVERY HUB</div>
