@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090711">
+<meta name="description" content="AI Vault — discover useful AI tools for writing, images, video, coding, study, audio and productivity.">
+<title>AI Vault — Discover Your Next AI Tool</title>
+<style>
+:root{--bg:#090711;--panel:#13101f;--panel2:#191427;--line:rgba(255,255,255,.09);--text:#f8f6ff;--muted:#aaa3bd;--purple:#a855f7;--pink:#ec4899;--cyan:#8b5cf6;--green:#86efac}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% -15%,rgba(124,58,237,.25),transparent 48%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}
+a{color:inherit;text-decoration:none}.wrap{width:min(1120px,calc(100% - 32px));margin:auto}
+header{position:sticky;top:0;z-index:10;background:rgba(9,7,17,.82);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.nav{height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{display:flex;align-items:center;gap:10px;font-size:1.25rem;font-weight:850;letter-spacing:-.5px}.brand-mark{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,#9333ea,#ec4899);box-shadow:0 5px 25px #a855f744;font-size:20px}.brand span:last-child{color:#d8b4fe}.nav-pill{font-size:.83rem;color:#e9d5ff;border:1px solid #a855f755;background:#a855f714;padding:8px 12px;border-radius:999px}
+.hero{text-align:center;padding:64px 0 34px}.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid #a855f74d;background:#a855f714;color:#e9d5ff;padding:7px 12px;border-radius:999px;font-size:.8rem;font-weight:700}.spark{color:#f0abfc}.hero h1{font-size:clamp(2.35rem,7vw,4.7rem);letter-spacing:-.065em;line-height:1.04;margin:20px 0 16px;font-weight:900}.gradient{background:linear-gradient(90deg,#c084fc,#f0abfc,#fb7185);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:640px;margin:0 auto;color:var(--muted);font-size:1.04rem}
+.searchbox{max-width:680px;margin:28px auto 0;position:relative}.searchbox input{width:100%;border:1px solid #ffffff20;background:#151121;color:white;border-radius:16px;padding:18px 18px 18px 52px;font-size:1rem;outline:none;box-shadow:0 10px 40px #0003}.searchbox input:focus{border-color:#a855f7;box-shadow:0 0 0 4px #a855f71f}.search-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:20px;color:#c4b5fd}.stats{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px}.stat{font-size:.8rem;color:#c4b5fd;background:#ffffff08;border:1px solid var(--line);padding:7px 11px;border-radius:999px}
+main{padding-bottom:56px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:22px 0 18px}.section-head h2{margin:0;font-size:1.4rem;letter-spacing:-.035em}.section-head p{margin:5px 0 0;color:var(--muted);font-size:.9rem}.count{color:var(--muted);font-size:.85rem}
+.featured{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:36px}.feature-card{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:20px;padding:20px;background:linear-gradient(135deg,#211433,#151020);min-height:160px;transition:transform .2s,border-color .2s}.feature-card:hover{transform:translateY(-3px);border-color:#a855f777}.feature-card:after{content:"";position:absolute;width:120px;height:120px;border-radius:50%;background:#a855f71c;right:-35px;bottom:-45px;filter:blur(3px)}.feature-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.tool-icon{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:#ffffff0d;border:1px solid var(--line);font-size:25px;flex-shrink:0}.tag{font-size:.7rem;color:#e9d5ff;background:#a855f722;border:1px solid #a855f733;border-radius:999px;padding:5px 8px;white-space:nowrap}.feature-card h3{margin:14px 0 4px;font-size:1.05rem}.feature-card p{margin:0;color:var(--muted);font-size:.85rem;max-width:90%}
+.controls{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:20px 0}.chips{display:flex;gap:8px;overflow-x:auto;padding:3px 1px 7px;max-width:100%;scrollbar-width:thin}.chip{white-space:nowrap;border:1px solid var(--line);background:#ffffff06;color:#c8c1d8;padding:9px 13px;border-radius:999px;font-size:.83rem;cursor:pointer;transition:.2s}.chip:hover,.chip.active{background:linear-gradient(135deg,#9333ea,#7c3aed);color:white;border-color:transparent}.filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.filters select{background:#151121;color:#e9e2f7;border:1px solid var(--line);padding:10px 12px;border-radius:11px;outline:none;max-width:100%}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.tool-card{border:1px solid var(--line);background:linear-gradient(160deg,#151121,#100d19);border-radius:18px;padding:18px;display:flex;flex-direction:column;min-height:228px;transition:transform .2s,border-color .2s,box-shadow .2s}.tool-card:hover{transform:translateY(-3px);border-color:#a855f766;box-shadow:0 12px 35px #0003}.card-head{display:flex;gap:12px;align-items:center}.card-title{min-width:0;flex:1}.card-title h3{margin:0;font-size:1rem;letter-spacing:-.02em}.card-title small{color:var(--muted);font-size:.78rem}.tool-card p{color:#b7b0c7;font-size:.87rem;margin:15px 0 18px;flex:1}.card-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px}.plan{font-size:.72rem;color:#bbf7d0;background:#14532d45;border:1px solid #22c55e30;padding:5px 8px;border-radius:999px}.plan.paid{color:#fbcfe8;background:#83184330;border-color:#ec489930}.visit{font-size:.82rem;font-weight:750;color:white;background:linear-gradient(100deg,#9333ea,#c026d3);padding:9px 12px;border-radius:10px;white-space:nowrap}.visit:hover{filter:brightness(1.12)}.empty{grid-column:1/-1;text-align:center;padding:44px 16px;border:1px dashed #ffffff25;border-radius:18px;color:var(--muted)}
+.note{color:#8f87a3;font-size:.78rem;margin-top:20px}.footer{border-top:1px solid var(--line);padding:25px 0;color:var(--muted);font-size:.82rem}.footer-inner{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.footer strong{color:#e9d5ff}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.featured{grid-template-columns:repeat(3,minmax(0,1fr))}.feature-card{padding:15px}.feature-card p{font-size:.8rem}}
+@media(max-width:560px){.wrap{width:min(100% - 22px,1120px)}.nav{height:62px}.hero{padding:48px 0 28px}.hero p{font-size:.94rem}.featured{grid-template-columns:1fr;gap:10px}.feature-card{min-height:0;padding:16px}.feature-card h3{margin-top:10px}.feature-card .tool-icon{width:40px;height:40px}.grid{grid-template-columns:1fr;gap:11px}.tool-card{min-height:205px;padding:16px}.section-head{align-items:start;flex-direction:column}.controls{align-items:stretch}.filters{width:100%}.filters select{flex:1}.nav-pill{font-size:.72rem;padding:7px 9px}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav"><a class="brand" href="#" aria-label="AI Vault home"><span class="brand-mark">✦</span><span>AI <span>VAULT</span></span></a><span class="nav-pill">✦ Your AI toolkit</span></div></header>
+<section class="hero wrap">
+  <div class="eyebrow"><span class="spark">✦</span> YOUR AI TOOL DISCOVERY HUB</div>
+  <h1>Find the right AI.<br><span class="gradient">Do amazing things.</span></h1>
+  <p>Explore powerful AI tools for writing, images, video, coding, learning and more — all in one place.</p>
+  <div class="searchbox"><span class="search-icon">⌕</span><input id="search" type="search" placeholder="Search tools, categories, or what you want to do..." aria-label="Search AI tools"></div>
+  <div class="stats"><span class="stat" id="toolStat">30+ AI tools</span><span class="stat">8 categories</span><span class="stat">One simple hub</span></div>
+</section>
+<main class="wrap">
+  <div class="section-head"><div><h2>✦ Featured picks</h2><p>Hand-picked tools to get you started.</p></div></div>
+  <section class="featured" id="featured"></section>
+  <div class="section-head" id="all-tools"><div><h2>Explore AI tools</h2><p>Search, filter and open the tool that fits your needs.</p></div><span class="count" id="resultCount"></span></div>
+  <div class="controls">
+    <div class="chips" id="categories" aria-label="Filter by category"></div>
+    <div class="filters">
+      <select id="planFilter" aria-label="Filter by plan"><option value="all">All plans</option><option value="free">Free / free plan</option><option value="paid">Paid / subscription</option></select>
+      <select id="sortFilter" aria-label="Sort tools"><option value="featured">Featured first</option><option value="az">Name A–Z</option></select>
+    </div>
+  </div>
+  <section class="grid" id="toolGrid"></section>
+  <p class="note">Plan labels are general guidance; availability and free-tier limits can change. Check each official website for current details. AI Vault is an independent directory and is not affiliated with the listed services.</p>
+</main>
+<footer class="footer"><div class="wrap footer-inner"><span>✦ <strong>AI VAULT</strong> — Discover. Create. Build.</span><span>Made for curious minds · © <span id="year"></span></span></div></footer>
+<script>
+const tools = [
+ {name:"ChatGPT",cat:"Writing",icon:"🤖",plan:"free",desc:"Write, brainstorm, learn and solve everyday problems.",url:"https://chatgpt.com/",featured:true},
+ {name:"Google Gemini",cat:"Writing",icon:"♊",plan:"free",desc:"An AI assistant for ideas, research and everyday tasks.",url:"https://gemini.google.com/",featured:true},
+ {name:"Claude",cat:"Writing",icon:"✳️",plan:"free",desc:"Work through writing, analysis and complex questions.",url:"https://claude.ai/",featured:true},
+ {name:"Perplexity",cat:"Study",icon:"🔎",plan:"free",desc:"Research questions with web answers and source links.",url:"https://www.perplexity.ai/",featured:true},
+ {name:"Microsoft Copilot",cat:"Productivity",icon:"🪟",plan:"free",desc:"Get help with questions, ideas and productivity.",url:"https://copilot.microsoft.com/"},
+ {name:"Grammarly",cat:"Writing",icon:"📝",plan:"free",desc:"Improve grammar, clarity and tone in your writing.",url:"https://www.grammarly.com/"},
+ {name:"QuillBot",cat:"Writing",icon:"🔁",plan:"free",desc:"Paraphrase text and check writing clarity.",url:"https://quillbot.com/"},
+ {name:"DeepL Write",cat:"Writing",icon:"🌐",plan:"free",desc:"Refine wording and make your writing clearer.",url:"https://www.deepl.com/write"},
+ {name:"Copy.ai",cat:"Writing",icon:"✍️",plan:"paid",desc:"Create marketing copy and business content with AI.",url:"https://www.copy.ai/"},
+ {name:"Canva",cat:"Image",icon:"🎨",plan:"free",desc:"Design social posts, presentations and graphics.",url:"https://www.canva.com/"},
+ {name:"Adobe Firefly",cat:"Image",icon:"🪄",plan:"free",desc:"Generate and edit creative images with AI tools.",url:"https://firefly.adobe.com/"},
+ {name:"Leonardo AI",cat:"Image",icon:"🦁",plan:"free",desc:"Create detailed AI artwork and visual concepts.",url:"https://leonardo.ai/"},
+ {name:"Ideogram",cat:"Image",icon:"💡",plan:"free",desc:"Generate images, including designs with text.",url:"https://ideogram.ai/"},
+ {name:"Playground AI",cat:"Image",icon:"🖼️",plan:"free",desc:"Explore AI image creation and visual editing.",url:"https://playground.com/"},
+ {name:"Recraft",cat:"Image",icon:"🧩",plan:"free",desc:"Make illustrations, icons and brand visuals.",url:"https://www.recraft.ai/"},
+ {name:"Remove.bg",cat:"Image",icon:"✂️",plan:"free",desc:"Remove image backgrounds in a few clicks.",url:"https://www.remove.bg/"},
+ {name:"Runway",cat:"Video",icon:"🎬",plan:"paid",desc:"Create and edit video using generative AI.",url:"https://runwayml.com/"},
+ {name:"Pika",cat:"Video",icon:"🌊",plan:"free",desc:"Turn creative ideas and images into AI videos.",url:"https://pika.art/"},
+ {name:"Luma Dream Machine",cat:"Video",icon:"🌙",plan:"free",desc:"Explore cinematic video generation from prompts.",url:"https://lumalabs.ai/"},
+ {name:"InVideo AI",cat:"Video",icon:"📽️",plan:"free",desc:"Build videos from a prompt or a script.",url:"https://invideo.io/"},
+ {name:"HeyGen",cat:"Video",icon:"🗣️",plan:"paid",desc:"Create presenter videos and AI avatars.",url:"https://www.heygen.com/"},
+ {name:"Synthesia",cat:"Video",icon:"👤",plan:"paid",desc:"Make professional videos with AI presenters.",url:"https://www.synthesia.io/"},
+ {name:"GitHub Copilot",cat:"Coding",icon:"🐙",plan:"paid",desc:"AI coding assistance inside supported editors.",url:"https://github.com/features/copilot"},
+ {name:"Cursor",cat:"Coding",icon:"⌨️",plan:"free",desc:"An AI-focused code editor for building software.",url:"https://cursor.com/"},
+ {name:"Replit",cat:"Coding",icon:"🚀",plan:"free",desc:"Build, run and deploy apps in your browser.",url:"https://replit.com/"},
+ {name:"Codeium / Windsurf",cat:"Coding",icon:"🌬️",plan:"free",desc:"AI-powered coding and development workflows.",url:"https://windsurf.com/"},
+ {name:"Phind",cat:"Coding",icon:"🧑‍💻",plan:"free",desc:"Search and reason through technical questions.",url:"https://www.phind.com/"},
+ {name:"Khan Academy Khanmigo",cat:"Study",icon:"📚",plan:"paid",desc:"AI-guided learning support from Khan Academy.",url:"https://www.khanacademy.org/khan-labs"},
+ {name:"NotebookLM",cat:"Study",icon:"📓",plan:"free",desc:"Study your sources and ask questions about them.",url:"https://notebooklm.google.com/"},
+ {name:"Wolfram Alpha",cat:"Study",icon:"➗",plan:"free",desc:"Explore calculations, maths and factual queries.",url:"https://www.wolframalpha.com/"},
+ {name:"Elicit",cat:"Study",icon:"🔬",plan:"free",desc:"Help with literature reviews and research workflows.",url:"https://elicit.com/"},
+ {name:"Suno",cat:"Audio",icon:"🎵",plan:"free",desc:"Create songs and music from text prompts.",url:"https://suno.com/"},
+ {name:"Udio",cat:"Audio",icon:"🎧",plan:"free",desc:"Explore AI-assisted music creation.",url:"https://www.udio.com/"},
+ {name:"ElevenLabs",cat:"Audio",icon:"🎙️",plan:"free",desc:"Generate natural-sounding speech and voiceovers.",url:"https://elevenlabs.io/"},
+ {name:"Otter.ai",cat:"Productivity",icon:"🦦",plan:"free",desc:"Transcribe and summarize meetings and conversations.",url:"https://otter.ai/"},
+ {name:"Zapier",cat:"Productivity",icon:"⚡",plan:"free",desc:"Connect apps and automate repetitive workflows.",url:"https://zapier.com/"},
+ {name:"Notion AI",cat:"Productivity",icon:"📒",plan:"paid",desc:"Organize notes, projects and team knowledge.",url:"https://www.notion.so/product/ai"},
+ {name:"Trello",cat:"Productivity",icon:"📌",plan:"free",desc:"Organize projects and tasks with visual boards.",url:"https://trello.com/"},
+ {name:"Beautiful.ai",cat:"Productivity",icon:"📊",plan:"paid",desc:"Create polished presentations more efficiently.",url:"https://www.beautiful.ai/"},
+ {name:"Tome",cat:"Productivity",icon:"🗂️",plan:"free",desc:"Create visual narratives and presentation-style pages.",url:"https://tome.app/"}
+];
+const categories=["All","Writing","Image","Video","Coding","Study","Audio","Productivity"];
+const icons={Writing:"✍️",Image:"🎨",Video:"🎬",Coding:"💻",Study:"📚",Audio:"🎧",Productivity:"⚡"};
+let activeCategory="All";
+const grid=document.getElementById("toolGrid"), featured=document.getElementById("featured");
+function safeText(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function renderCategories(){
+ document.getElementById("categories").innerHTML=categories.map(c=>`<button class="chip ${activeCategory===c?"active":""}" data-cat="${c}">${c==="All"?"✦ All tools":(icons[c]||"")+ " "+c}</button>`).join("");
+ document.querySelectorAll("[data-cat]").forEach(b=>b.addEventListener("click",()=>{activeCategory=b.dataset.cat;renderCategories();renderTools();}));
+}
+function card(t){
+ return `<article class="tool-card"><div class="card-head"><div class="tool-icon">${t.icon}</div><div class="card-title"><h3>${safeText(t.name)}</h3><small>${safeText(t.cat)}</small></div></div><p>${safeText(t.desc)}</p><div class="card-bottom"><span class="plan ${t.plan==="paid"?"paid":""}">${t.plan==="paid"?"Paid / subscription":"Free plan available"}</span><a class="visit" href="${t.url}" target="_blank" rel="noopener noreferrer" aria-label="Visit ${safeText(t.name)}">Visit tool ↗</a></div></article>`;
+}
+function renderTools(){
+ const q=document.getElementById("search").value.trim().toLowerCase(), plan=document.getElementById("planFilter").value, sort=document.getElementById("sortFilter").value;
+ let filtered=tools.filter(t=>(activeCategory==="All"||t.cat===activeCategory)&&(plan==="all"||t.plan===plan)&&(!q||[t.name,t.cat,t.desc].join(" ").toLowerCase().includes(q)));
+ if(sort==="az")filtered.sort((a,b)=>a.name.localeCompare(b.name));else filtered.sort((a,b)=>(b.featured?1:0)-(a.featured?1:0)||a.name.localeCompare(b.name));
+ grid.innerHTML=filtered.length?filtered.map(card).join(""):`<div class="empty"><div style="font-size:2rem;margin-bottom:8px">🔎</div><strong>No tools found</strong><br>Try another search or change the filters.</div>`;
+ document.getElementById("resultCount").textContent=`${filtered.length} tool${filtered.length===1?"":"s"} found`;
+ document.getElementById("toolStat").textContent=`${tools.length} AI tools`;
+}
+function renderFeatured(){
+ const picks=tools.filter(t=>t.featured);
+ featured.innerHTML=picks.map(t=>`<a class="feature-card" href="${t.url}" target="_blank" rel="noopener noreferrer"><div class="feature-top"><span class="tool-icon">${t.icon}</span><span class="tag">✦ Featured</span></div><h3>${safeText(t.name)} ↗</h3><p>${safeText(t.desc)}</p></a>`).join("");
+}
+document.getElementById("search").addEventListener("input",renderTools);
+document.getElementById("planFilter").addEventListener("change",renderTools);
+document.getElementById("sortFilter").addEventListener("change",renderTools);
+document.getElementById("year").textContent=new Date().getFullYear();
+renderCategories();renderFeatured();renderTools();
+</script>
+</body>
+</html>
