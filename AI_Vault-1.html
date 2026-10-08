@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Vault — Discover AI Tools</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,Arial,sans-serif;background:#080b14;color:#fff;line-height:1.5}
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 6%;border-bottom:1px solid #202536;background:#0b0f1b;position:sticky;top:0;z-index:5}
+.logo{font-size:25px;font-weight:800;letter-spacing:-1px}.logo span{color:#7c5cff}
+nav a{color:#cbd0df;text-decoration:none;margin-left:22px;font-size:14px}
+.hero{text-align:center;padding:75px 20px 55px;background:radial-gradient(circle at 50% 0,#33236b 0,transparent 48%)}
+.badge{display:inline-block;padding:7px 13px;border:1px solid #40366e;border-radius:30px;color:#bcaeff;background:#151125;font-size:13px;margin-bottom:18px}
+h1{font-size:clamp(40px,8vw,70px);line-height:1.03;letter-spacing:-3px;margin-bottom:18px}
+h1 span{color:#8b6cff}
+.hero p{max-width:650px;margin:auto;color:#aeb5c7;font-size:17px}
+.search{margin:30px auto 0;max-width:650px;display:flex;background:#121726;border:1px solid #2b3245;border-radius:14px;padding:6px}
+.search input{flex:1;background:transparent;border:0;outline:0;color:#fff;padding:13px;font-size:15px}
+.search button{border:0;background:#7c5cff;color:#fff;padding:0 20px;border-radius:10px;font-weight:700}
+section{padding:35px 6%}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.section-title h2{font-size:26px}.section-title a{color:#9c89ff;text-decoration:none;font-size:14px}
+.categories{display:flex;gap:10px;overflow:auto;padding-bottom:8px}
+.cat{white-space:nowrap;padding:10px 15px;border:1px solid #292f40;border-radius:25px;color:#c9cfdd;background:#101522;cursor:pointer}
+.cat:hover{border-color:#7c5cff;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.card{background:#101522;border:1px solid #252c3d;border-radius:17px;padding:20px;transition:.2s}
+.card:hover{transform:translateY(-3px);border-color:#6350c7}
+.icon{width:45px;height:45px;border-radius:12px;background:#1c2340;display:grid;place-items:center;font-size:23px;margin-bottom:15px}
+.card h3{margin-bottom:7px}.card p{font-size:13px;color:#969fb3;min-height:40px}
+.tags{margin:14px 0}.tag{font-size:11px;color:#aeb6c9;background:#181e2c;padding:5px 8px;border-radius:6px}
+.try{display:inline-block;margin-top:12px;color:#fff;text-decoration:none;background:#242b3e;padding:9px 13px;border-radius:9px;font-size:13px}
+footer{text-align:center;padding:35px 20px;border-top:1px solid #202536;color:#727b8f;font-size:13px;margin-top:30px}
+@media(max-width:650px){nav a{display:none}.hero{padding-top:55px}h1{letter-spacing:-2px}.search button{padding:0 14px}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">AI<span>Vault</span></div>
+  <div><a href="#tools">Tools</a><a href="#categories">Categories</a><a href="#about">About</a></div>
+</nav>
+
+<header class="hero">
+  <div class="badge">✨ Discover the world of AI</div>
+  <h1>Find the <span>Best AI Tools</span><br>in One Place.</h1>
+  <p>Explore powerful AI tools for writing, images, video, coding, study and more.</p>
+  <div class="search">
+    <input id="search" placeholder="Search AI tools..." oninput="filterTools()">
+    <button onclick="filterTools()">Search</button>
+  </div>
+</header>
+
+<section id="categories">
+  <div class="section-title"><h2>Categories</h2></div>
+  <div class="categories">
+    <div class="cat" onclick="setCat('All')">All</div>
+    <div class="cat" onclick="setCat('Writing')">✍️ Writing</div>
+    <div class="cat" onclick="setCat('Image')">🎨 Image</div>
+    <div class="cat" onclick="setCat('Video')">🎬 Video</div>
+    <div class="cat" onclick="setCat('Coding')">💻 Coding</div>
+    <div class="cat" onclick="setCat('Study')">📚 Study</div>
+  </div>
+</section>
+
+<section id="tools">
+  <div class="section-title"><h2>🔥 Popular AI Tools</h2><a href="#tools">View all</a></div>
+  <div class="grid" id="toolGrid"></div>
+</section>
+
+<footer id="about">© 2026 AI Vault — Discover. Compare. Create.</footer>
+
+<script>
+const tools=[
+{name:"ChatGPT",cat:"Writing",icon:"🤖",desc:"AI assistant for writing, ideas, research and everyday tasks."},
+{name:"Canva AI",cat:"Image",icon:"🎨",desc:"Create designs, images and visual content with AI."},
+{name:"Google Flow",cat:"Video",icon:"🎬",desc:"Create cinematic AI video experiences and creative scenes."},
+{name:"GitHub Copilot",cat:"Coding",icon:"💻",desc:"AI-powered coding assistant for developers."},
+{name:"Perplexity",cat:"Study",icon:"🔎",desc:"AI search and research assistant for finding answers."},
+{name:"Claude",cat:"Writing",icon:"✨",desc:"AI assistant for writing, analysis and creative work."}
+];
+let active="All";
+function render(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const list=tools.filter(t=>(active==="All"||t.cat===active)&&(t.name+" "+t.desc).toLowerCase().includes(q));
+ document.getElementById("toolGrid").innerHTML=list.map(t=>`
+ <article class="card"><div class="icon">${t.icon}</div><h3>${t.name}</h3><p>${t.desc}</p>
+ <div class="tags"><span class="tag">${t.cat}</span></div><a class="try" href="#" onclick="return false">Try Now →</a></article>`).join("")
+ || '<p style="color:#929bad">No tools found.</p>';
+}
+function filterTools(){render()}
+function setCat(cat){active=cat;render()}
+render();
+</script>
+</body>
+</html>

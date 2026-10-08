@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Vault — AI Tools</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#080b14;color:#fff}nav{padding:18px 6%;border-bottom:1px solid #22293a;background:#0b0f1b;display:flex;justify-content:space-between}.logo{font-size:25px;font-weight:800}.logo span{color:#8064ff}nav a{color:#bbb;text-decoration:none;margin-left:20px}.hero{text-align:center;padding:70px 20px;background:radial-gradient(circle at 50% 0,#302064,transparent 55%)}h1{font-size:clamp(40px,8vw,68px);margin:15px 0;letter-spacing:-3px}.purple{color:#896eff}.hero p{color:#adb4c5;font-size:17px}.search{max-width:620px;margin:28px auto;display:flex;background:#121827;border:1px solid #30374a;border-radius:13px;padding:5px}.search input{flex:1;background:none;border:0;outline:0;color:white;padding:13px}.search button{border:0;border-radius:9px;background:#8064ff;color:white;padding:0 20px;font-weight:bold}.wrap{padding:35px 6%}.cats{display:flex;gap:10px;overflow:auto;margin:18px 0 30px}.cat{white-space:nowrap;padding:10px 15px;border:1px solid #293144;border-radius:25px;background:#101522;color:#ccd2df;cursor:pointer}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}.card{padding:20px;background:#101522;border:1px solid #252d40;border-radius:17px}.icon{font-size:25px;margin-bottom:12px}.card p{color:#929bad;font-size:14px;min-height:42px}.tag{font-size:11px;background:#1b2231;color:#b7bfd0;padding:5px 8px;border-radius:6px}.try{display:inline-block;margin-top:15px;padding:9px 13px;border-radius:9px;background:#252d40;color:#fff;text-decoration:none;font-size:13px}footer{text-align:center;padding:35px;color:#747d90;border-top:1px solid #202638;margin-top:30px}
+</style>
+</head>
+<body>
+<nav><div class="logo">AI<span>Vault</span></div><div><a href="#tools">Tools</a><a href="#categories">Categories</a></div></nav>
+<header class="hero"><div>✨ Discover the world of AI</div><h1>Find the <span class="purple">Best AI Tools</span><br>in One Place.</h1><p>Explore powerful AI tools for writing, images, video, coding, study and more.</p><div class="search"><input id="q" placeholder="Search AI tools..."><button onclick="render()">Search</button></div></header>
+<main class="wrap"><h2 id="categories">Categories</h2><div class="cats"><button class="cat" onclick="setCat('All')">All</button><button class="cat" onclick="setCat('Writing')">✍️ Writing</button><button class="cat" onclick="setCat('Image')">🎨 Image</button><button class="cat" onclick="setCat('Video')">🎬 Video</button><button class="cat" onclick="setCat('Coding')">💻 Coding</button><button class="cat" onclick="setCat('Study')">📚 Study</button></div><h2 id="tools">🔥 Popular AI Tools</h2><div class="grid" id="grid"></div></main>
+<footer>© 2026 AI Vault — Discover. Compare. Create.</footer>
+<script>
+const tools=[['ChatGPT','Writing','🤖','AI assistant for writing, ideas, research and everyday tasks.'],['Canva AI','Image','🎨','Create designs, images and visual content with AI.'],['Google Flow','Video','🎬','Create cinematic AI video experiences.'],['GitHub Copilot','Coding','💻','AI-powered coding assistant for developers.'],['Perplexity','Study','🔎','AI search and research assistant.'],['Claude','Writing','✨','AI assistant for writing and analysis.']];
+let active='All';
+function setCat(c){active=c;render()}
+function render(){let q=document.getElementById('q').value.toLowerCase();let a=tools.filter(x=>(active==='All'||x[1]===active)&&(x[0]+' '+x[3]).toLowerCase().includes(q));document.getElementById('grid').innerHTML=a.map(x=>`<article class="card"><div class="icon">${x[2]}</div><h3>${x[0]}</h3><p>${x[3]}</p><span class="tag">${x[1]}</span><br><a class="try" href="#" onclick="return false">Try Now →</a></article>`).join('')||'<p>No tools found.</p>'}
+render();
+</script>
+</body>
+</html>
