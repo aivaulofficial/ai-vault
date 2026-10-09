@@ -3,590 +3,342 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090711">
-<meta name="description" content="AI Vault — discover useful AI tools for writing, images, video, coding, study, audio and productivity.">
-<title>AI Vault — Discover Your Next AI Tool</title>
+<title>AI VAULT | ARMAN</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-:root{--bg:#090711;--panel:#13101f;--panel2:#191427;--line:rgba(255,255,255,.09);--text:#f8f6ff;--muted:#aaa3bd;--purple:#a855f7;--pink:#ec4899;--cyan:#8b5cf6;--green:#86efac}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% -15%,rgba(124,58,237,.25),transparent 48%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}
-a{color:inherit;text-decoration:none}.wrap{width:min(1120px,calc(100% - 32px));margin:auto}
-header{position:sticky;top:0;z-index:10;background:rgba(9,7,17,.82);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-.nav{height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{display:flex;align-items:center;gap:10px;font-size:1.25rem;font-weight:850;letter-spacing:-.5px}.brand-mark{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,#9333ea,#ec4899);box-shadow:0 5px 25px #a855f744;font-size:20px}.brand span:last-child{color:#d8b4fe}.nav-pill{font-size:.83rem;color:#e9d5ff;border:1px solid #a855f755;background:#a855f714;padding:8px 12px;border-radius:999px}
-.hero{text-align:center;padding:64px 0 34px}.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid #a855f74d;background:#a855f714;color:#e9d5ff;padding:7px 12px;border-radius:999px;font-size:.8rem;font-weight:700}.spark{color:#f0abfc}.hero h1{font-size:clamp(2.35rem,7vw,4.7rem);letter-spacing:-.065em;line-height:1.04;margin:20px 0 16px;font-weight:900}.gradient{background:linear-gradient(90deg,#c084fc,#f0abfc,#fb7185);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:640px;margin:0 auto;color:var(--muted);font-size:1.04rem}
-.searchbox{max-width:680px;margin:28px auto 0;position:relative}.searchbox input{width:100%;border:1px solid #ffffff20;background:#151121;color:white;border-radius:16px;padding:18px 18px 18px 52px;font-size:1rem;outline:none;box-shadow:0 10px 40px #0003}.searchbox input:focus{border-color:#a855f7;box-shadow:0 0 0 4px #a855f71f}.search-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:20px;color:#c4b5fd}.stats{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px}.stat{font-size:.8rem;color:#c4b5fd;background:#ffffff08;border:1px solid var(--line);padding:7px 11px;border-radius:999px}
-main{padding-bottom:56px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:22px 0 18px}.section-head h2{margin:0;font-size:1.4rem;letter-spacing:-.035em}.section-head p{margin:5px 0 0;color:var(--muted);font-size:.9rem}.count{color:var(--muted);font-size:.85rem}
-.featured{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:36px}.feature-card{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:20px;padding:20px;background:linear-gradient(135deg,#211433,#151020);min-height:160px;transition:transform .2s,border-color .2s}.feature-card:hover{transform:translateY(-3px);border-color:#a855f777}.feature-card:after{content:"";position:absolute;width:120px;height:120px;border-radius:50%;background:#a855f71c;right:-35px;bottom:-45px;filter:blur(3px)}.feature-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.tool-icon{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:#ffffff0d;border:1px solid var(--line);font-size:25px;flex-shrink:0}.tag{font-size:.7rem;color:#e9d5ff;background:#a855f722;border:1px solid #a855f733;border-radius:999px;padding:5px 8px;white-space:nowrap}.feature-card h3{margin:14px 0 4px;font-size:1.05rem}.feature-card p{margin:0;color:var(--muted);font-size:.85rem;max-width:90%}
-.controls{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:20px 0}.chips{display:flex;gap:8px;overflow-x:auto;padding:3px 1px 7px;max-width:100%;scrollbar-width:thin}.chip{white-space:nowrap;border:1px solid var(--line);background:#ffffff06;color:#c8c1d8;padding:9px 13px;border-radius:999px;font-size:.83rem;cursor:pointer;transition:.2s}.chip:hover,.chip.active{background:linear-gradient(135deg,#9333ea,#7c3aed);color:white;border-color:transparent}.filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.filters select{background:#151121;color:#e9e2f7;border:1px solid var(--line);padding:10px 12px;border-radius:11px;outline:none;max-width:100%}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.tool-card{border:1px solid var(--line);background:linear-gradient(160deg,#151121,#100d19);border-radius:18px;padding:18px;display:flex;flex-direction:column;min-height:228px;transition:transform .2s,border-color .2s,box-shadow .2s}.tool-card:hover{transform:translateY(-3px);border-color:#a855f766;box-shadow:0 12px 35px #0003}.card-head{display:flex;gap:12px;align-items:center}.card-title{min-width:0;flex:1}.card-title h3{margin:0;font-size:1rem;letter-spacing:-.02em}.card-title small{color:var(--muted);font-size:.78rem}.tool-card p{color:#b7b0c7;font-size:.87rem;margin:15px 0 18px;flex:1}.card-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px}.plan{font-size:.72rem;color:#bbf7d0;background:#14532d45;border:1px solid #22c55e30;padding:5px 8px;border-radius:999px}.plan.paid{color:#fbcfe8;background:#83184330;border-color:#ec489930}.visit{font-size:.82rem;font-weight:750;color:white;background:linear-gradient(100deg,#9333ea,#c026d3);padding:9px 12px;border-radius:10px;white-space:nowrap}.visit:hover{filter:brightness(1.12)}.empty{grid-column:1/-1;text-align:center;padding:44px 16px;border:1px dashed #ffffff25;border-radius:18px;color:var(--muted)}
-.note{color:#8f87a3;font-size:.78rem;margin-top:20px}.footer{border-top:1px solid var(--line);padding:25px 0;color:var(--muted);font-size:.82rem}.footer-inner{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.footer strong{color:#e9d5ff}
-@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.featured{grid-template-columns:repeat(3,minmax(0,1fr))}.feature-card{padding:15px}.feature-card p{font-size:.8rem}}
-@media(max-width:560px){.wrap{width:min(100% - 22px,1120px)}.nav{height:62px}.hero{padding:48px 0 28px}.hero p{font-size:.94rem}.featured{grid-template-columns:1fr;gap:10px}.feature-card{min-height:0;padding:16px}.feature-card h3{margin-top:10px}.feature-card .tool-icon{width:40px;height:40px}.grid{grid-template-columns:1fr;gap:11px}.tool-card{min-height:205px;padding:16px}.section-head{align-items:start;flex-direction:column}.controls{align-items:stretch}.filters{width:100%}.filters select{flex:1}.nav-pill{font-size:.72rem;padding:7px 9px}}
+*{box-sizing:border-box}
+body{
+  margin:0;background:#090613;color:#fff;
+  font-family:Arial,sans-serif;min-height:100vh
+}
+body:before{
+  content:"ARMAN";position:fixed;z-index:-1;
+  top:40%;left:50%;transform:translate(-50%,-50%) rotate(-15deg);
+  font-size:clamp(65px,17vw,180px);font-weight:900;
+  letter-spacing:10px;color:rgba(167,105,255,.09);
+  white-space:nowrap;pointer-events:none
+}
+header{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:10px;flex-wrap:wrap;padding:16px;
+  background:#100a1c;border-bottom:1px solid #39254f
+}
+.logo{font-size:24px;font-weight:900}
+.logo span{color:#b66cff}
+nav{display:flex;gap:7px;flex-wrap:wrap}
+button{
+  padding:11px 14px;border:0;border-radius:9px;
+  background:linear-gradient(100deg,#904dff,#e345d0);
+  color:white;font-weight:bold;cursor:pointer
+}
+.secondary{background:#2a1b3d;border:1px solid #62417e}
+main{max-width:950px;margin:auto;padding:16px}
+.hero{text-align:center;padding:28px 5px}
+.hero h1{font-size:clamp(30px,7vw,50px)}
+.purple{color:#b66cff}
+.card{
+  background:rgba(24,15,40,.96);padding:20px;
+  margin:18px 0;border:1px solid #3d2854;border-radius:16px
+}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.tool{background:#100a1c;border:1px solid #39264d;border-radius:12px;padding:15px}
+input,textarea,select{
+  display:block;width:100%;padding:13px;margin:8px 0 15px;
+  border-radius:8px;border:1px solid #4b3562;
+  background:#0c0715;color:white;font-size:15px
+}
+textarea{min-height:100px}
+label{color:#dfd1f0;font-size:14px}
+.muted{color:#bcaecc;line-height:1.6}
+.hidden{display:none!important}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+#photoPreview{max-width:100%;max-height:280px;border-radius:10px}
+#status,#videoStatus{overflow-wrap:anywhere;white-space:pre-wrap}
+footer{text-align:center;padding:25px;color:#bcaecc}
 </style>
 </head>
+
 <body>
-  <style>
-body {
-  display: flex;
-  flex-direction: column;
-}
+<header>
+  <div class="logo">AI <span>VAULT</span></div>
+  <nav>
+    <button class="secondary" onclick="showAuth('login')">Login</button>
+    <button onclick="showAuth('signup')">Sign Up</button>
+    <button class="secondary" onclick="showAuth('forgot')">Forgot Password</button>
+  </nav>
+</header>
 
-header {
-  order: 0;
-}
+<main>
+  <section class="hero">
+    <p class="purple">WELCOME TO YOUR AI WORLD</p>
+    <h1>Create More With <span class="purple">AI VAULT</span></h1>
+    <p class="muted">Your creative space for AI tools and video ideas.</p>
+    <h2 class="purple">ＡＲＭＡＮ</h2>
+  </section>
 
-#video-studio {
-  order: 1;
-  margin-top: 10px !important;
-}
+  <section class="card" id="auth">
+    <h2 id="authTitle">Login to AI Vault</h2>
+    <p class="muted">Access your account or create a new one.</p>
+    <form id="authForm">
+      <label>Email Address</label>
+      <input id="email" type="email" placeholder="Enter your email" required>
+      <div id="passwordBox">
+        <label>Password</label>
+        <input id="password" type="password" minlength="6"
+               placeholder="At least 6 characters">
+      </div>
+      <div class="actions">
+        <button id="authSubmit" type="submit">Login</button>
+        <button type="button" class="secondary"
+                onclick="showAuth('signup')">Create Account</button>
+      </div>
+    </form>
+    <p id="status" class="muted" role="status"></p>
+    <button id="logout" class="secondary hidden" onclick="logout()">Logout</button>
+  </section>
 
-.hero {
-  order: 2;
-}
+  <section class="card">
+    <h2>🎬 AI Video Studio</h2>
+    <p class="muted">Prepare a video prompt in your preferred language.</p>
 
-main {
-  order: 3;
-}
+    <label>Video Type</label>
+    <select id="mode">
+      <option value="text">Text to Video</option>
+      <option value="photo">Photo to Video</option>
+    </select>
 
-footer {
-  order: 4;
-}
-  </style>
-  
-<header><div class="wrap nav"><a class="brand" href="#" aria-label="AI Vault home"><span class="brand-mark">✦</span><span>AI <span>VAULT</span></span></a><span class="nav-pill">✦ Your AI toolkit</span></div></header>
-<section class="hero wrap">
-  <div class="eyebrow"><span class="spark">✦</span> YOUR AI TOOL DISCOVERY HUB</div>
-  <h1>Find the right AI.<br><span class="gradient">Do amazing things.</span></h1>
-  <p>Explore powerful AI tools for writing, images, video, coding, learning and more — all in one place.</p>
-  <div class="searchbox"><span class="search-icon">⌕</span><input id="search" type="search" placeholder="Search tools, categories, or what you want to do..." aria-label="Search AI tools"></div>
-  <div class="stats"><span class="stat" id="toolStat">30+ AI tools</span><span class="stat">8 categories</span><span class="stat">One simple hub</span></div>
-</section>
-<main class="wrap">
-  <div class="section-head"><div><h2>✦ Featured picks</h2><p>Hand-picked tools to get you started.</p></div></div>
-  <section class="featured" id="featured"></section>
-  <div class="section-head" id="all-tools"><div><h2>Explore AI tools</h2><p>Search, filter and open the tool that fits your needs.</p></div><span class="count" id="resultCount"></span></div>
-  <div class="controls">
-    <div class="chips" id="categories" aria-label="Filter by category"></div>
-    <div class="filters">
-      <select id="planFilter" aria-label="Filter by plan"><option value="all">All plans</option><option value="free">Free / free plan</option><option value="paid">Paid / subscription</option></select>
-      <select id="sortFilter" aria-label="Sort tools"><option value="featured">Featured first</option><option value="az">Name A–Z</option></select>
+    <div id="photoBox" class="hidden">
+      <label>Choose a Photo</label>
+      <input id="photo" type="file" accept="image/png,image/jpeg,image/webp">
+      <img id="photoPreview" class="hidden" alt="Photo preview">
     </div>
-  </div>
-  <section class="grid" id="toolGrid"></section>
-  <p class="note">Plan labels are general guidance; availability and free-tier limits can change. Check each official website for current details. AI Vault is an independent directory and is not affiliated with the listed services.</p>
+
+    <label>Describe Your Video</label>
+    <textarea id="prompt" placeholder="Describe the scene, characters and actions..."></textarea>
+
+    <div class="grid">
+      <div>
+        <label>Output Language</label>
+        <select id="language">
+          <option>Hindi</option>
+          <option>Urdu</option>
+          <option>English</option>
+        </select>
+      </div>
+      <div>
+        <label>Duration</label>
+        <select id="duration">
+          <option value="30">30 seconds</option>
+          <option value="45">45 seconds</option>
+          <option value="60">60 seconds</option>
+        </select>
+      </div>
+      <div>
+        <label>Video Ratio</label>
+        <select id="ratio">
+          <option>9:16 Vertical</option>
+          <option>16:9 Landscape</option>
+          <option>1:1 Square</option>
+        </select>
+      </div>
+    </div>
+
+    <button onclick="prepareVideo()">Prepare Video Prompt</button>
+    <p id="videoStatus" class="muted" role="status"></p>
+    <textarea id="result" class="hidden" readonly></textarea>
+    <button id="copyBtn" class="secondary hidden" onclick="copyPrompt()">Copy Prompt</button>
+  </section>
+
+  <section class="card">
+    <h2>✨ Explore AI Tools</h2>
+    <div class="grid">
+      <div class="tool"><h3>✍️ AI Writing</h3><p class="muted">Writing and caption ideas.</p></div>
+      <div class="tool"><h3>🖼️ Image Creator</h3><p class="muted">Prepare image-generation prompts.</p></div>
+      <div class="tool"><h3>🎥 Video Studio</h3><p class="muted">Create video concepts and prompts.</p></div>
+      <div class="tool"><h3>📱 Social Media</h3><p class="muted">Reel captions, bios and post ideas.</p></div>
+    </div>
+  </section>
 </main>
-<footer class="footer"><div class="wrap footer-inner"><span>✦ <strong>AI VAULT</strong> — Discover. Create. Build.</span><span>Made for curious minds · © <span id="year"></span></span></div></footer>
-<script>
-const tools = [
- {name:"ChatGPT",cat:"Writing",icon:"🤖",plan:"free",desc:"Write, brainstorm, learn and solve everyday problems.",url:"https://chatgpt.com/",featured:true},
- {name:"Google Gemini",cat:"Writing",icon:"♊",plan:"free",desc:"An AI assistant for ideas, research and everyday tasks.",url:"https://gemini.google.com/",featured:true},
- {name:"Claude",cat:"Writing",icon:"✳️",plan:"free",desc:"Work through writing, analysis and complex questions.",url:"https://claude.ai/",featured:true},
- {name:"Perplexity",cat:"Study",icon:"🔎",plan:"free",desc:"Research questions with web answers and source links.",url:"https://www.perplexity.ai/",featured:true},
- {name:"Microsoft Copilot",cat:"Productivity",icon:"🪟",plan:"free",desc:"Get help with questions, ideas and productivity.",url:"https://copilot.microsoft.com/"},
- {name:"Grammarly",cat:"Writing",icon:"📝",plan:"free",desc:"Improve grammar, clarity and tone in your writing.",url:"https://www.grammarly.com/"},
- {name:"QuillBot",cat:"Writing",icon:"🔁",plan:"free",desc:"Paraphrase text and check writing clarity.",url:"https://quillbot.com/"},
- {name:"DeepL Write",cat:"Writing",icon:"🌐",plan:"free",desc:"Refine wording and make your writing clearer.",url:"https://www.deepl.com/write"},
- {name:"Copy.ai",cat:"Writing",icon:"✍️",plan:"paid",desc:"Create marketing copy and business content with AI.",url:"https://www.copy.ai/"},
- {name:"Canva",cat:"Image",icon:"🎨",plan:"free",desc:"Design social posts, presentations and graphics.",url:"https://www.canva.com/"},
- {name:"Adobe Firefly",cat:"Image",icon:"🪄",plan:"free",desc:"Generate and edit creative images with AI tools.",url:"https://firefly.adobe.com/"},
- {name:"Leonardo AI",cat:"Image",icon:"🦁",plan:"free",desc:"Create detailed AI artwork and visual concepts.",url:"https://leonardo.ai/"},
- {name:"Ideogram",cat:"Image",icon:"💡",plan:"free",desc:"Generate images, including designs with text.",url:"https://ideogram.ai/"},
- {name:"Playground AI",cat:"Image",icon:"🖼️",plan:"free",desc:"Explore AI image creation and visual editing.",url:"https://playground.com/"},
- {name:"Recraft",cat:"Image",icon:"🧩",plan:"free",desc:"Make illustrations, icons and brand visuals.",url:"https://www.recraft.ai/"},
- {name:"Remove.bg",cat:"Image",icon:"✂️",plan:"free",desc:"Remove image backgrounds in a few clicks.",url:"https://www.remove.bg/"},
- {name:"Runway",cat:"Video",icon:"🎬",plan:"paid",desc:"Create and edit video using generative AI.",url:"https://runwayml.com/"},
- {name:"Pika",cat:"Video",icon:"🌊",plan:"free",desc:"Turn creative ideas and images into AI videos.",url:"https://pika.art/"},
- {name:"Luma Dream Machine",cat:"Video",icon:"🌙",plan:"free",desc:"Explore cinematic video generation from prompts.",url:"https://lumalabs.ai/"},
- {name:"InVideo AI",cat:"Video",icon:"📽️",plan:"free",desc:"Build videos from a prompt or a script.",url:"https://invideo.io/"},
- {name:"HeyGen",cat:"Video",icon:"🗣️",plan:"paid",desc:"Create presenter videos and AI avatars.",url:"https://www.heygen.com/"},
- {name:"Synthesia",cat:"Video",icon:"👤",plan:"paid",desc:"Make professional videos with AI presenters.",url:"https://www.synthesia.io/"},
- {name:"GitHub Copilot",cat:"Coding",icon:"🐙",plan:"paid",desc:"AI coding assistance inside supported editors.",url:"https://github.com/features/copilot"},
- {name:"Cursor",cat:"Coding",icon:"⌨️",plan:"free",desc:"An AI-focused code editor for building software.",url:"https://cursor.com/"},
- {name:"Replit",cat:"Coding",icon:"🚀",plan:"free",desc:"Build, run and deploy apps in your browser.",url:"https://replit.com/"},
- {name:"Codeium / Windsurf",cat:"Coding",icon:"🌬️",plan:"free",desc:"AI-powered coding and development workflows.",url:"https://windsurf.com/"},
- {name:"Phind",cat:"Coding",icon:"🧑‍💻",plan:"free",desc:"Search and reason through technical questions.",url:"https://www.phind.com/"},
- {name:"Khan Academy Khanmigo",cat:"Study",icon:"📚",plan:"paid",desc:"AI-guided learning support from Khan Academy.",url:"https://www.khanacademy.org/khan-labs"},
- {name:"NotebookLM",cat:"Study",icon:"📓",plan:"free",desc:"Study your sources and ask questions about them.",url:"https://notebooklm.google.com/"},
- {name:"Wolfram Alpha",cat:"Study",icon:"➗",plan:"free",desc:"Explore calculations, maths and factual queries.",url:"https://www.wolframalpha.com/"},
- {name:"Elicit",cat:"Study",icon:"🔬",plan:"free",desc:"Help with literature reviews and research workflows.",url:"https://elicit.com/"},
- {name:"Suno",cat:"Audio",icon:"🎵",plan:"free",desc:"Create songs and music from text prompts.",url:"https://suno.com/"},
- {name:"Udio",cat:"Audio",icon:"🎧",plan:"free",desc:"Explore AI-assisted music creation.",url:"https://www.udio.com/"},
- {name:"ElevenLabs",cat:"Audio",icon:"🎙️",plan:"free",desc:"Generate natural-sounding speech and voiceovers.",url:"https://elevenlabs.io/"},
- {name:"Otter.ai",cat:"Productivity",icon:"🦦",plan:"free",desc:"Transcribe and summarize meetings and conversations.",url:"https://otter.ai/"},
- {name:"Zapier",cat:"Productivity",icon:"⚡",plan:"free",desc:"Connect apps and automate repetitive workflows.",url:"https://zapier.com/"},
- {name:"Notion AI",cat:"Productivity",icon:"📒",plan:"paid",desc:"Organize notes, projects and team knowledge.",url:"https://www.notion.so/product/ai"},
- {name:"Trello",cat:"Productivity",icon:"📌",plan:"free",desc:"Organize projects and tasks with visual boards.",url:"https://trello.com/"},
- {name:"Beautiful.ai",cat:"Productivity",icon:"📊",plan:"paid",desc:"Create polished presentations more efficiently.",url:"https://www.beautiful.ai/"},
- {name:"Tome",cat:"Productivity",icon:"🗂️",plan:"free",desc:"Create visual narratives and presentation-style pages.",url:"https://tome.app/"}
-];
-const categories=["All","Writing","Image","Video","Coding","Study","Audio","Productivity"];
-const icons={Writing:"✍️",Image:"🎨",Video:"🎬",Coding:"💻",Study:"📚",Audio:"🎧",Productivity:"⚡"};
-let activeCategory="All";
-const grid=document.getElementById("toolGrid"), featured=document.getElementById("featured");
-function safeText(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function renderCategories(){
- document.getElementById("categories").innerHTML=categories.map(c=>`<button class="chip ${activeCategory===c?"active":""}" data-cat="${c}">${c==="All"?"✦ All tools":(icons[c]||"")+ " "+c}</button>`).join("");
- document.querySelectorAll("[data-cat]").forEach(b=>b.addEventListener("click",()=>{activeCategory=b.dataset.cat;renderCategories();renderTools();}));
-}
-function card(t){
- return `<article class="tool-card"><div class="card-head"><div class="tool-icon">${t.icon}</div><div class="card-title"><h3>${safeText(t.name)}</h3><small>${safeText(t.cat)}</small></div></div><p>${safeText(t.desc)}</p><div class="card-bottom"><span class="plan ${t.plan==="paid"?"paid":""}">${t.plan==="paid"?"Paid / subscription":"Free plan available"}</span><a class="visit" href="${t.url}" target="_blank" rel="noopener noreferrer" aria-label="Visit ${safeText(t.name)}">Visit tool ↗</a></div></article>`;
-}
-function renderTools(){
- const q=document.getElementById("search").value.trim().toLowerCase(), plan=document.getElementById("planFilter").value, sort=document.getElementById("sortFilter").value;
- let filtered=tools.filter(t=>(activeCategory==="All"||t.cat===activeCategory)&&(plan==="all"||t.plan===plan)&&(!q||[t.name,t.cat,t.desc].join(" ").toLowerCase().includes(q)));
- if(sort==="az")filtered.sort((a,b)=>a.name.localeCompare(b.name));else filtered.sort((a,b)=>(b.featured?1:0)-(a.featured?1:0)||a.name.localeCompare(b.name));
- grid.innerHTML=filtered.length?filtered.map(card).join(""):`<div class="empty"><div style="font-size:2rem;margin-bottom:8px">🔎</div><strong>No tools found</strong><br>Try another search or change the filters.</div>`;
- document.getElementById("resultCount").textContent=`${filtered.length} tool${filtered.length===1?"":"s"} found`;
- document.getElementById("toolStat").textContent=`${tools.length} AI tools`;
-}
-function renderFeatured(){
- const picks=tools.filter(t=>t.featured);
- featured.innerHTML=picks.map(t=>`<a class="feature-card" href="${t.url}" target="_blank" rel="noopener noreferrer"><div class="feature-top"><span class="tool-icon">${t.icon}</span><span class="tag">✦ Featured</span></div><h3>${safeText(t.name)} ↗</h3><p>${safeText(t.desc)}</p></a>`).join("");
-}
-document.getElementById("search").addEventListener("input",renderTools);
-document.getElementById("planFilter").addEventListener("change",renderTools);
-document.getElementById("sortFilter").addEventListener("change",renderTools);
-document.getElementById("year").textContent=new Date().getFullYear();
-renderCategories();renderFeatured();renderTools();
-</script>
-  <!-- AI VAULT VIDEO STUDIO -->
-<section id="video-studio" style="max-width:800px;margin:35px auto;padding:24px;background:#171326;color:white;border:1px solid #7546c8;border-radius:18px;font-family:Arial,sans-serif;">
-  <h2 style="text-align:center;color:#c4a0ff;">🎬 AI Vault Video Studio</h2>
-  <p style="text-align:center;color:#d1c7e8;">Apne idea ko AI video mein badalne ki shuruaat karein!</p>
 
-  <label for="videoPrompt">📝 Apni video ke baare mein likhein:</label>
-  <textarea id="videoPrompt" placeholder="Example: Ek ladka baarish mein apne pyaar ko yaad kar raha hai..." style="box-sizing:border-box;width:100%;height:110px;margin:10px 0;padding:12px;background:#0e0b18;color:white;border:1px solid #6943a5;border-radius:10px;font-size:15px;"></textarea>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:12px;">
-    <div>
-      <label for="videoLanguage">🗣️ Voice language</label>
-      <select id="videoLanguage" style="box-sizing:border-box;width:100%;padding:11px;margin-top:7px;background:#252039;color:white;border-radius:8px;">
-        <option>Hindi</option>
-        <option>Urdu</option>
-        <option>English</option>
-      </select>
-    </div>
-
-    <div>
-      <label for="videoDuration">⏱️ Duration</label>
-      <select id="videoDuration" style="box-sizing:border-box;width:100%;padding:11px;margin-top:7px;background:#252039;color:white;border-radius:8px;">
-        <option>30 seconds</option>
-        <option>45 seconds</option>
-        <option>60 seconds</option>
-      </select>
-    </div>
-
-    <div>
-      <label for="videoFormat">📱 Format</label>
-      <select id="videoFormat" style="box-sizing:border-box;width:100%;padding:11px;margin-top:7px;background:#252039;color:white;border-radius:8px;">
-        <option>9:16 Reels / Shorts</option>
-        <option>16:9 YouTube</option>
-        <option>1:1 Square</option>
-      </select>
-    </div>
-  </div>
-
-  <p style="margin-top:18px;">
-    <label><input type="checkbox" id="videoVoice" checked> Voice-over</label>
-    &nbsp;
-    <label><input type="checkbox" id="videoSubs" checked> Subtitles</label>
-    &nbsp;
-    <label><input type="checkbox" id="videoMusic" checked> Background music</label>
-  </p>
-
-  <button onclick="makeVideoPrompt()" style="width:100%;padding:14px;background:linear-gradient(90deg,#773cf5,#b044e8);color:white;border:0;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;">
-    ✨ Create Video Prompt
-  </button>
-
-  <div id="videoResult" style="display:none;margin-top:18px;">
-    <h3 style="color:#c4a0ff;">Your Video Prompt</h3>
-    <textarea id="generatedVideoPrompt" readonly style="box-sizing:border-box;width:100%;height:200px;padding:12px;background:#0e0b18;color:white;border:1px solid #6943a5;border-radius:10px;"></textarea>
-    <button onclick="copyVideoPrompt()" style="width:100%;margin-top:10px;padding:12px;background:#29213e;color:white;border:1px solid #9a70e8;border-radius:9px;cursor:pointer;">📋 Copy Prompt</button>
-    <a href="https://labs.google/fx/tools/flow" target="_blank" rel="noopener noreferrer" style="display:block;text-align:center;margin-top:12px;padding:13px;background:#fff;color:#171326;border-radius:9px;text-decoration:none;font-weight:bold;">🎥 Open Google Flow</a>
-    <p style="font-size:12px;color:#c5bbd9;">Actual video generation Google Flow ki availability, account access aur usage limits par depend karegi.</p>
-  </div>
-</section>
+<footer>AI VAULT · CREATED BY ARMAN</footer>
 
 <script>
-function makeVideoPrompt() {
-  const idea = document.getElementById('videoPrompt').value.trim();
+/* Supabase connection */
+const SUPABASE_URL = "https://surgffldianqwzdxkvzj.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_3qOZKBB3yFvoI_eiFBXN7g_BR23g6L9";
 
-  if (!idea) {
-    alert('Pehle apni video ka idea likho!');
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+let authMode = "login";
+
+function showAuth(mode){
+  authMode = mode;
+  document.getElementById("authTitle").textContent = {
+    login:"Login to AI Vault",
+    signup:"Create Your Account",
+    forgot:"Reset Your Password"
+  }[mode];
+
+  document.getElementById("authSubmit").textContent = {
+    login:"Login",
+    signup:"Sign Up",
+    forgot:"Send Reset Link"
+  }[mode];
+
+  document.getElementById("passwordBox")
+    .classList.toggle("hidden", mode === "forgot");
+
+  document.getElementById("status").textContent = "";
+  document.getElementById("auth").scrollIntoView({behavior:"smooth"});
+}
+
+document.getElementById("authForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const status = document.getElementById("status");
+
+  status.textContent = "Please wait...";
+
+  try{
+    let result;
+
+    if(authMode === "signup"){
+      if(password.length < 6) throw new Error("Password must be at least 6 characters.");
+      result = await db.auth.signUp({email,password});
+    }else if(authMode === "login"){
+      result = await db.auth.signInWithPassword({email,password});
+    }else{
+      result = await db.auth.resetPasswordForEmail(email,{
+        redirectTo:location.origin + location.pathname
+      });
+    }
+
+    if(result.error) throw result.error;
+
+    status.textContent =
+      authMode === "signup"
+      ? "Signup request sent. Check your email if confirmation is required."
+      : authMode === "login"
+      ? "Login successful!"
+      : "If this email is registered, a password-reset link will be sent.";
+
+  }catch(err){
+    status.textContent = err.message || "Something went wrong.";
+  }
+});
+
+async function updateSession(){
+  const {data} = await db.auth.getSession();
+  const user = data.session?.user;
+
+  document.getElementById("logout")
+    .classList.toggle("hidden",!user);
+
+  if(user){
+    document.getElementById("status").textContent =
+      "Signed in as " + user.email;
+  }
+}
+
+db.auth.onAuthStateChange((_event,session)=>{
+  document.getElementById("logout")
+    .classList.toggle("hidden",!session);
+});
+
+updateSession();
+
+async function logout(){
+  const {error} = await db.auth.signOut();
+  document.getElementById("status").textContent =
+    error ? error.message : "You have logged out.";
+}
+
+document.getElementById("mode").addEventListener("change",function(){
+  document.getElementById("photoBox")
+    .classList.toggle("hidden",this.value !== "photo");
+});
+
+document.getElementById("photo").addEventListener("change",function(){
+  const file = this.files[0];
+  const preview = document.getElementById("photoPreview");
+
+  if(!file){
+    preview.classList.add("hidden");
+    preview.removeAttribute("src");
     return;
   }
 
-  const language = document.getElementById('videoLanguage').value;
-  const duration = document.getElementById('videoDuration').value;
-  const format = document.getElementById('videoFormat').value;
-  const voice = document.getElementById('videoVoice').checked;
-  const subs = document.getElementById('videoSubs').checked;
-  const music = document.getElementById('videoMusic').checked;
-
-  const prompt = `Create a cinematic ${duration} video.
-VIDEO IDEA: ${idea}
-FORMAT: ${format}.
-LANGUAGE: ${language}.
-VOICE-OVER: ${voice ? 'Include a natural-sounding ' + language + ' voice-over.' : 'No voice-over.'}
-SUBTITLES: ${subs ? 'Include accurate, readable ' + language + ' subtitles.' : 'No subtitles.'}
-MUSIC: ${music ? 'Add suitable background music matching the mood.' : 'No background music.'}
-SCENES: Divide the story into coherent scenes with suitable locations, backgrounds, camera movements, and consistent characters.
-QUALITY: High visual quality, smooth transitions, clear storytelling, and suitable lighting.
-IMPORTANT: Match the visuals to the video idea.`;
-
-  document.getElementById('generatedVideoPrompt').value = prompt;
-  document.getElementById('videoResult').style.display = 'block';
-}
-
-function copyVideoPrompt() {
-  const box = document.getElementById('generatedVideoPrompt');
-  box.select();
-  box.setSelectionRange(0, 99999);
-
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(box.value)
-      .then(() => alert('Prompt copy ho gaya!'))
-      .catch(() => alert('Prompt select ho gaya hai. Copy option use karein.'));
-  } else {
-    try {
-      const copied = document.execCommand('copy');
-      alert(copied ? 'Prompt copy ho gaya!' : 'Prompt select karke Copy karein.');
-    } catch (e) {
-      alert('Prompt select karke Copy karein.');
-    }
-  }
-}
-  <!-- AI VAULT LOGIN & SIGNUP -->
-<style>
-#av-auth-buttons {
-  position: fixed;
-  right: 14px;
-  bottom: 18px;
-  z-index: 9998;
-  display: flex;
-  gap: 8px;
-  font-family: Arial, sans-serif;
-}
-
-#av-auth-buttons button,
-#av-auth-modal button {
-  border: none;
-  border-radius: 9px;
-  padding: 11px 16px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-#av-login-open {
-  background: #242424;
-  color: white;
-  border: 1px solid #666 !important;
-}
-
-#av-signup-open {
-  background: #7c3aed;
-  color: white;
-}
-
-#av-auth-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: rgba(0,0,0,.82);
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  font-family: Arial, sans-serif;
-}
-
-#av-auth-card {
-  background: #171717;
-  color: white;
-  width: 100%;
-  max-width: 370px;
-  padding: 24px;
-  border-radius: 16px;
-  box-sizing: border-box;
-  border: 1px solid #383838;
-}
-
-#av-auth-card h2 {
-  margin-top: 0;
-  text-align: center;
-}
-
-#av-auth-card p {
-  color: #bbb;
-  font-size: 14px;
-  text-align: center;
-}
-
-#av-auth-card input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 13px;
-  margin: 7px 0;
-  border-radius: 8px;
-  border: 1px solid #444;
-  background: #242424;
-  color: white;
-}
-
-#av-auth-card .av-primary {
-  width: 100%;
-  margin-top: 10px;
-  background: #7c3aed;
-  color: white;
-}
-
-#av-auth-card .av-secondary {
-  background: transparent;
-  color: #c4b5fd;
-  width: 100%;
-  margin-top: 8px;
-}
-
-#av-auth-message {
-  overflow-wrap: anywhere;
-  font-size: 13px;
-  margin-top: 12px;
-}
-
-#av-auth-close {
-  float: right;
-  background: transparent;
-  color: white;
-  font-size: 20px;
-  padding: 0 6px !important;
-}
-
-@media (max-width: 420px) {
-  #av-auth-buttons button {
-    padding: 10px 12px;
-  }
-}
-</style>
-
-<div id="av-auth-buttons">
-  <button id="av-login-open">Login</button>
-  <button id="av-signup-open">Sign Up</button>
-</div>
-
-<div id="av-auth-modal">
-  <div id="av-auth-card">
-    <button id="av-auth-close" aria-label="Close">×</button>
-    <h2 id="av-auth-title">Welcome to AI Vault</h2>
-    <p id="av-auth-subtitle">Sign in or create your account</p>
-
-    <form id="av-auth-form">
-      <input
-        id="av-auth-email"
-        type="email"
-        placeholder="Email address"
-        autocomplete="email"
-        required
-      >
-
-      <input
-        id="av-auth-password"
-        type="password"
-        placeholder="Password (minimum 8 characters)"
-        autocomplete="current-password"
-        minlength="8"
-        required
-      >
-
-      <button class="av-primary" id="av-auth-submit" type="submit">
-        Login
-      </button>
-    </form>
-
-    <button class="av-secondary" id="av-forgot" type="button">
-      Forgot Password?
-    </button>
-
-    <button class="av-secondary" id="av-switch" type="button">
-      New here? Create an account
-    </button>
-
-    <div id="av-auth-message" role="status" aria-live="polite"></div>
-  </div>
-</div>
-
-<script>
-(() => {
-  const SUPABASE_URL = "https://vvtyoibdktsyqhdsujoq.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_3qOZKBB3yFvoI_eiFBXN7g_BR23g6L9";
-
-  const modal = document.getElementById("av-auth-modal");
-  const form = document.getElementById("av-auth-form");
-  const emailInput = document.getElementById("av-auth-email");
-  const passwordInput = document.getElementById("av-auth-password");
-  const title = document.getElementById("av-auth-title");
-  const subtitle = document.getElementById("av-auth-subtitle");
-  const submit = document.getElementById("av-auth-submit");
-  const message = document.getElementById("av-auth-message");
-  const forgot = document.getElementById("av-forgot");
-  const switchButton = document.getElementById("av-switch");
-
-  let mode = "login";
-
-  function showMessage(text, isError = false) {
-    message.textContent = text;
-    message.style.color = isError ? "#fca5a5" : "#86efac";
+  if(!["image/jpeg","image/png","image/webp"].includes(file.type)){
+    alert("Please select a JPG, PNG or WebP image.");
+    this.value = "";
+    return;
   }
 
-  function setMode(newMode) {
-    mode = newMode;
-    message.textContent = "";
-    passwordInput.value = "";
-
-    if (mode === "signup") {
-      title.textContent = "Create Your Account";
-      subtitle.textContent = "Join AI Vault for free";
-      submit.textContent = "Create Account";
-      passwordInput.autocomplete = "new-password";
-      switchButton.textContent = "Already registered? Login";
-      forgot.style.display = "none";
-    } else {
-      title.textContent = "Welcome Back";
-      subtitle.textContent = "Login to your AI Vault account";
-      submit.textContent = "Login";
-      passwordInput.autocomplete = "current-password";
-      switchButton.textContent = "New here? Create an account";
-      forgot.style.display = "block";
-    }
+  if(file.size > 10*1024*1024){
+    alert("Please select an image under 10 MB.");
+    this.value = "";
+    return;
   }
 
-  function openModal(newMode) {
-    setMode(newMode);
-    modal.style.display = "flex";
+  preview.src = URL.createObjectURL(file);
+  preview.classList.remove("hidden");
+});
+
+function prepareVideo(){
+  const mode = document.getElementById("mode").value;
+  const prompt = document.getElementById("prompt").value.trim();
+  const photo = document.getElementById("photo").files[0];
+
+  if(!prompt){
+    document.getElementById("videoStatus").textContent =
+      "Please describe your video first.";
+    return;
   }
 
-  document.getElementById("av-login-open").onclick =
-    () => openModal("login");
-
-  document.getElementById("av-signup-open").onclick =
-    () => openModal("signup");
-
-  document.getElementById("av-auth-close").onclick = () => {
-    modal.style.display = "none";
-  };
-
-  modal.addEventListener("click", event => {
-    if (event.target === modal) modal.style.display = "none";
-  });
-
-  switchButton.onclick = () => {
-    setMode(mode === "login" ? "signup" : "login");
-  };
-
-  async function authRequest(path, body) {
-    const response = await fetch(
-      SUPABASE_URL + "/auth/v1/" + path,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "apikey": SUPABASE_KEY
-        },
-        body: JSON.stringify(body)
-      }
-    );
-
-    const data = await response.json().catch(() => ({}));
-
-    if (!response.ok) {
-      throw new Error(
-        data.msg ||
-        data.message ||
-        data.error_description ||
-        data.error ||
-        "Request failed. Please try again."
-      );
-    }
-
-    return data;
+  if(mode === "photo" && !photo){
+    document.getElementById("videoStatus").textContent =
+      "Please upload a photo first.";
+    return;
   }
 
-  form.addEventListener("submit", async event => {
-    event.preventDefault();
+  const language = document.getElementById("language").value;
+  const duration = document.getElementById("duration").value;
+  const ratio = document.getElementById("ratio").value;
 
-    const email = emailInput.value.trim();
-    const password = passwordInput.value;
+  document.getElementById("result").value =
+`Create a ${duration}-second ${ratio} video.
+Mode: ${mode === "photo" ? "Photo to Video" : "Text to Video"}.
+Output language: ${language}.
+Scene description: ${prompt}
+Use smooth motion, consistent characters, cinematic lighting and high visual quality.
+Use ${language} for spoken dialogue and captions.`;
 
-    submit.disabled = true;
-    showMessage("Please wait...");
+  document.getElementById("result").classList.remove("hidden");
+  document.getElementById("copyBtn").classList.remove("hidden");
 
-    try {
-      if (mode === "signup") {
-        const data = await authRequest("signup", {
-          email,
-          password
-        });
+  document.getElementById("videoStatus").textContent =
+    "Your prompt is ready. Actual video generation requires a connected video API and secure backend.";
+}
 
-        if (data.access_token) {
-          showMessage("Account created and logged in successfully!");
-        } else {
-          showMessage(
-            "Signup submitted! Check your email to confirm your account."
-          );
-        }
-      } else {
-        const data = await authRequest(
-          "token?grant_type=password",
-          { email, password }
-        );
+async function copyPrompt(){
+  const field = document.getElementById("result");
 
-        if (data.access_token) {
-          localStorage.setItem(
-            "av_user",
-            JSON.stringify({
-              email: data.user?.email || email,
-              access_token: data.access_token,
-              refresh_token: data.refresh_token
-            })
-          );
-
-          showMessage("Login successful! Welcome to AI Vault.");
-          passwordInput.value = "";
-        }
-      }
-    } catch (error) {
-      showMessage(error.message, true);
-    } finally {
-      submit.disabled = false;
-    }
-  });
-
-  forgot.onclick = async () => {
-    const email = emailInput.value.trim();
-
-    if (!email) {
-      showMessage("Please enter your email address first.", true);
-      emailInput.focus();
-      return;
-    }
-
-    forgot.disabled = true;
-    showMessage("Sending password reset email...");
-
-    try {
-      await authRequest("recover", {
-        email,
-        redirect_to: window.location.origin + window.location.pathname
-      });
-
-      showMessage("If the account exists, a password reset email will be sent.");
-    } catch (error) {
-      showMessage(error.message, true);
-    } finally {
-      forgot.disabled = false;
-    }
-  };
-})();
-</script>
-<!-- END AI VAULT LOGIN & SIGNUP -->
+  try{
+    await navigator.clipboard.writeText(field.value);
+    document.getElementById("videoStatus").textContent = "Prompt copied!";
+  }catch(e){
+    field.select();
+    document.execCommand("copy");
+    document.getElementById("videoStatus").textContent = "Copy the selected prompt.";
+  }
+}
 </script>
 </body>
-</html>
+  </html>
