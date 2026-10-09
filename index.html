@@ -255,6 +255,338 @@ function copyVideoPrompt() {
     }
   }
 }
+  <!-- AI VAULT LOGIN & SIGNUP -->
+<style>
+#av-auth-buttons {
+  position: fixed;
+  right: 14px;
+  bottom: 18px;
+  z-index: 9998;
+  display: flex;
+  gap: 8px;
+  font-family: Arial, sans-serif;
+}
+
+#av-auth-buttons button,
+#av-auth-modal button {
+  border: none;
+  border-radius: 9px;
+  padding: 11px 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#av-login-open {
+  background: #242424;
+  color: white;
+  border: 1px solid #666 !important;
+}
+
+#av-signup-open {
+  background: #7c3aed;
+  color: white;
+}
+
+#av-auth-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,.82);
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  font-family: Arial, sans-serif;
+}
+
+#av-auth-card {
+  background: #171717;
+  color: white;
+  width: 100%;
+  max-width: 370px;
+  padding: 24px;
+  border-radius: 16px;
+  box-sizing: border-box;
+  border: 1px solid #383838;
+}
+
+#av-auth-card h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+#av-auth-card p {
+  color: #bbb;
+  font-size: 14px;
+  text-align: center;
+}
+
+#av-auth-card input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px;
+  margin: 7px 0;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #242424;
+  color: white;
+}
+
+#av-auth-card .av-primary {
+  width: 100%;
+  margin-top: 10px;
+  background: #7c3aed;
+  color: white;
+}
+
+#av-auth-card .av-secondary {
+  background: transparent;
+  color: #c4b5fd;
+  width: 100%;
+  margin-top: 8px;
+}
+
+#av-auth-message {
+  overflow-wrap: anywhere;
+  font-size: 13px;
+  margin-top: 12px;
+}
+
+#av-auth-close {
+  float: right;
+  background: transparent;
+  color: white;
+  font-size: 20px;
+  padding: 0 6px !important;
+}
+
+@media (max-width: 420px) {
+  #av-auth-buttons button {
+    padding: 10px 12px;
+  }
+}
+</style>
+
+<div id="av-auth-buttons">
+  <button id="av-login-open">Login</button>
+  <button id="av-signup-open">Sign Up</button>
+</div>
+
+<div id="av-auth-modal">
+  <div id="av-auth-card">
+    <button id="av-auth-close" aria-label="Close">×</button>
+    <h2 id="av-auth-title">Welcome to AI Vault</h2>
+    <p id="av-auth-subtitle">Sign in or create your account</p>
+
+    <form id="av-auth-form">
+      <input
+        id="av-auth-email"
+        type="email"
+        placeholder="Email address"
+        autocomplete="email"
+        required
+      >
+
+      <input
+        id="av-auth-password"
+        type="password"
+        placeholder="Password (minimum 8 characters)"
+        autocomplete="current-password"
+        minlength="8"
+        required
+      >
+
+      <button class="av-primary" id="av-auth-submit" type="submit">
+        Login
+      </button>
+    </form>
+
+    <button class="av-secondary" id="av-forgot" type="button">
+      Forgot Password?
+    </button>
+
+    <button class="av-secondary" id="av-switch" type="button">
+      New here? Create an account
+    </button>
+
+    <div id="av-auth-message" role="status" aria-live="polite"></div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const SUPABASE_URL = "https://vvtyoibdktsyqhdsujoq.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_3qOZKBB3yFvoI_eiFBXN7g_BR23g6L9";
+
+  const modal = document.getElementById("av-auth-modal");
+  const form = document.getElementById("av-auth-form");
+  const emailInput = document.getElementById("av-auth-email");
+  const passwordInput = document.getElementById("av-auth-password");
+  const title = document.getElementById("av-auth-title");
+  const subtitle = document.getElementById("av-auth-subtitle");
+  const submit = document.getElementById("av-auth-submit");
+  const message = document.getElementById("av-auth-message");
+  const forgot = document.getElementById("av-forgot");
+  const switchButton = document.getElementById("av-switch");
+
+  let mode = "login";
+
+  function showMessage(text, isError = false) {
+    message.textContent = text;
+    message.style.color = isError ? "#fca5a5" : "#86efac";
+  }
+
+  function setMode(newMode) {
+    mode = newMode;
+    message.textContent = "";
+    passwordInput.value = "";
+
+    if (mode === "signup") {
+      title.textContent = "Create Your Account";
+      subtitle.textContent = "Join AI Vault for free";
+      submit.textContent = "Create Account";
+      passwordInput.autocomplete = "new-password";
+      switchButton.textContent = "Already registered? Login";
+      forgot.style.display = "none";
+    } else {
+      title.textContent = "Welcome Back";
+      subtitle.textContent = "Login to your AI Vault account";
+      submit.textContent = "Login";
+      passwordInput.autocomplete = "current-password";
+      switchButton.textContent = "New here? Create an account";
+      forgot.style.display = "block";
+    }
+  }
+
+  function openModal(newMode) {
+    setMode(newMode);
+    modal.style.display = "flex";
+  }
+
+  document.getElementById("av-login-open").onclick =
+    () => openModal("login");
+
+  document.getElementById("av-signup-open").onclick =
+    () => openModal("signup");
+
+  document.getElementById("av-auth-close").onclick = () => {
+    modal.style.display = "none";
+  };
+
+  modal.addEventListener("click", event => {
+    if (event.target === modal) modal.style.display = "none";
+  });
+
+  switchButton.onclick = () => {
+    setMode(mode === "login" ? "signup" : "login");
+  };
+
+  async function authRequest(path, body) {
+    const response = await fetch(
+      SUPABASE_URL + "/auth/v1/" + path,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_KEY
+        },
+        body: JSON.stringify(body)
+      }
+    );
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(
+        data.msg ||
+        data.message ||
+        data.error_description ||
+        data.error ||
+        "Request failed. Please try again."
+      );
+    }
+
+    return data;
+  }
+
+  form.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+
+    submit.disabled = true;
+    showMessage("Please wait...");
+
+    try {
+      if (mode === "signup") {
+        const data = await authRequest("signup", {
+          email,
+          password
+        });
+
+        if (data.access_token) {
+          showMessage("Account created and logged in successfully!");
+        } else {
+          showMessage(
+            "Signup submitted! Check your email to confirm your account."
+          );
+        }
+      } else {
+        const data = await authRequest(
+          "token?grant_type=password",
+          { email, password }
+        );
+
+        if (data.access_token) {
+          localStorage.setItem(
+            "av_user",
+            JSON.stringify({
+              email: data.user?.email || email,
+              access_token: data.access_token,
+              refresh_token: data.refresh_token
+            })
+          );
+
+          showMessage("Login successful! Welcome to AI Vault.");
+          passwordInput.value = "";
+        }
+      }
+    } catch (error) {
+      showMessage(error.message, true);
+    } finally {
+      submit.disabled = false;
+    }
+  });
+
+  forgot.onclick = async () => {
+    const email = emailInput.value.trim();
+
+    if (!email) {
+      showMessage("Please enter your email address first.", true);
+      emailInput.focus();
+      return;
+    }
+
+    forgot.disabled = true;
+    showMessage("Sending password reset email...");
+
+    try {
+      await authRequest("recover", {
+        email,
+        redirect_to: window.location.origin + window.location.pathname
+      });
+
+      showMessage("If the account exists, a password reset email will be sent.");
+    } catch (error) {
+      showMessage(error.message, true);
+    } finally {
+      forgot.disabled = false;
+    }
+  };
+})();
+</script>
+<!-- END AI VAULT LOGIN & SIGNUP -->
 </script>
 </body>
 </html>
