@@ -2,11 +2,25 @@
   "id": "/ai-vault/",
   "name": "AI VAULT",
   "short_name": "AI VAULT",
-  "description": "AI VAULT - AI tools and video studio",
+  "description": "AI VAULT - Your personal AI tools studio",
   "start_url": "/ai-vault/",
   "scope": "/ai-vault/",
   "display": "standalone",
   "background_color": "#090613",
   "theme_color": "#100a1c",
-  "orientation": "portrait"
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/ai-vault/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/ai-vault/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
 }
