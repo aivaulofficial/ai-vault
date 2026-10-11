@@ -1,0 +1,12 @@
+{
+  "id": "/ai-vault/",
+  "name": "AI VAULT",
+  "short_name": "AI VAULT",
+  "description": "AI VAULT - AI tools and video studio",
+  "start_url": "/ai-vault/",
+  "scope": "/ai-vault/",
+  "display": "standalone",
+  "background_color": "#090613",
+  "theme_color": "#100a1c",
+  "orientation": "portrait"
+}
